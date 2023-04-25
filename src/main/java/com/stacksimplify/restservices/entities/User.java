@@ -1,6 +1,8 @@
 package com.stacksimplify.restservices.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 //Entity
 @Entity
@@ -11,9 +13,11 @@ public class User {
     @GeneratedValue
     private Long id;
 
+    @NotEmpty(message = "Username is mandatory field. Please provide username")
     @Column(name = "USER_NAME", length = 50, nullable = false, unique = true)
     private String username;
 
+    @Size(min = 2, message = "Firstame should have atleast 2 characters")
     @Column(name = "FIRST_NAME", length = 50, nullable = false)
     private String firstname;
 
