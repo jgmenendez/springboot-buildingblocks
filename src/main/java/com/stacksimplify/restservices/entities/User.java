@@ -6,14 +6,16 @@ import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
+import org.springframework.hateoas.RepresentationModel;
+
 //Entity
 @Entity
 @Table(name = "users")
-public class User {
+public class User extends RepresentationModel {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private Long userId;
 
     @NotEmpty(message = "Username is mandatory field. Please provide username")
     @Column(name = "USER_NAME", length = 50, nullable = false, unique = true)
@@ -43,23 +45,27 @@ public class User {
     }
 
     //Fields Constructor
-    public User(Long id, String username, String firstname, String lastname, String email, String role, String ssn) {
-        this.id = id;
+    public User(Long userId,
+            @NotEmpty(message = "Username is mandatory field. Please provide username") String username,
+            @Size(min = 2, message = "Firstame should have atleast 2 characters") String firstname, String lastname,
+            String email, String role, String ssn, List<Order> orders) {
+        this.userId = userId;
         this.username = username;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.role = role;
         this.ssn = ssn;
+        this.orders = orders;
     }
 
     //Getters and Setters
-    public Long getId() {
-        return id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -121,15 +127,8 @@ public class User {
     //To String
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", email='" + email + '\'' +
-                ", role='" + role + '\'' +
-                ", ssn='" + ssn + '\'' +
-                '}';
+        return "User [userId=" + userId + ", username=" + username + ", firstname=" + firstname + ", lastname="
+                + lastname + ", email=" + email + ", role=" + role + ", ssn=" + ssn + ", orders=" + orders + "]";
     }
 
 }
