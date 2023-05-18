@@ -8,9 +8,6 @@ import java.util.List;
 
 import org.springframework.hateoas.RepresentationModel;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 
 //Entity
@@ -56,6 +53,9 @@ public class User extends RepresentationModel {
     @JsonView(Views.Internal.class)
     private List<Order> orders;
 
+    @Column(name = "ADDRESS")
+    private String address;
+
     //No Argument Constructor
     public User() {
     }
@@ -64,7 +64,7 @@ public class User extends RepresentationModel {
     public User(Long userId,
             @NotEmpty(message = "Username is mandatory field. Please provide username") String username,
             @Size(min = 2, message = "Firstame should have atleast 2 characters") String firstname, String lastname,
-            String email, String role, String ssn, List<Order> orders) {
+            String email, String role, String ssn, List<Order> orders, String address) {
         this.userId = userId;
         this.username = username;
         this.firstname = firstname;
@@ -73,8 +73,9 @@ public class User extends RepresentationModel {
         this.role = role;
         this.ssn = ssn;
         this.orders = orders;
+        this.address = address;
     }
-
+    
     //Getters and Setters
     public Long getUserId() {
         return userId;
@@ -140,11 +141,20 @@ public class User extends RepresentationModel {
         this.orders = orders;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     //To String
     @Override
     public String toString() {
         return "User [userId=" + userId + ", username=" + username + ", firstname=" + firstname + ", lastname="
-                + lastname + ", email=" + email + ", role=" + role + ", ssn=" + ssn + ", orders=" + orders + "]";
-    }
+                + lastname + ", email=" + email + ", role=" + role + ", ssn=" + ssn + ", orders=" + orders
+                + ", address=" + address + "]";
+    }   
 
 }
